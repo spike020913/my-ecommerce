@@ -10,17 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^4.5.0",
+    "axios": "^1.7.7",
+    "e-commerce": "file:..",
+    "framer-motion": "^11.9.0",
+    "lucide-react": "^0.446.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "react-confetti": "^6.1.0",
+    "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.26.2",
     "recharts": "^2.12.7",
-    "zustand": "^5.0.0-rc.2",
-    "@stripe/stripe-js": "^4.5.0",
-    "axios": "^1.7.7",
-    "framer-motion": "^11.9.0",
-    "lucide-react": "^0.446.0"
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

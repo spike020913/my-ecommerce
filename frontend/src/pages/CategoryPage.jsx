@@ -9,13 +9,10 @@ const CategoryPage = () => {
 
   const { category } = useParams();
 
-  console.log("category is :", category);
-
   useEffect(() => {
     fetchProductsByCategory(category);
   }, [fetchProductsByCategory, category]);
 
-  console.log("products is :", products);
   
   return (
     <div className="min-h-screen">

@@ -15,8 +15,6 @@ const OrderSummary = () => {
 	const formattedTotal = total.toFixed(2);
 	const formattedSavings = savings.toFixed(2);
 
-	console.log("coupon!! -> ", coupon);
-
 	const handlePayment = async () => {
 		const stripe = await stripePromise;
 		const res = await axios.post("/payments/create-checkout-session", {

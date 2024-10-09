@@ -22,17 +22,14 @@ export const LogSignForm = ({isLogIn}) => {
 
     const handleLogin = (e) => {
       e.preventDefault();
-      console.log(email, password);
       login(email, password);
     };
 
     const handleSignup = (e) => {
       e.preventDefault();
-      console.log(formData);
       signup(formData);
     };
 
-    console.log(isLogIn);
     return (
       <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         {/* Create account heading with motion div */}

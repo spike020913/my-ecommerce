@@ -43,7 +43,6 @@ export const getCartProducts = async (req, res) => {
             const cartItem = req.user.cartItems.find(item => item.id === product.id);
             return { ...product.toJSON(), quantity: cartItem.quantity};
         });
-        console.log("Cart -> ", cartItems);
         res.json(cartItems);
     }
     catch (error) {
