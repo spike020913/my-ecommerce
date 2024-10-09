@@ -9,6 +9,7 @@ import cartRoutes from './routes/cartRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import { connectDB } from './lib/db.js';
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use('/api/cart', cartRoutes)
 app.use('/api/coupons', couponRoutes)
 app.use('/api/payments', paymentRoutes)
 app.use('/api/analytics', analyticsRoutes)
+app.use('/api/orders', orderRoutes)
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

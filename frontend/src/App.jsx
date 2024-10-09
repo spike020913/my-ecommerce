@@ -13,12 +13,14 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import OrderPage from "./pages/OrderPage.jsx";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage.jsx";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage.jsx";
 
 function App() {
-  const { user, checkAuth, checkingAuth} = useUserStore();
+  const { user, checkAuth, checkingAuth } = useUserStore();
   const { getCartItems } = useCartStore();
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -28,7 +30,7 @@ function App() {
 
     getCartItems();
   }, [getCartItems, user]);
-  if (checkingAuth) return <LoadingSpinner/>
+  if (checkingAuth) return <LoadingSpinner />;
 
   return (
     <>
@@ -57,7 +59,9 @@ function App() {
               element={user ? <Navigate to="/" /> : <LoginPage />}
             />
 
-            <Route path="/dashboard" element={
+            <Route
+              path="/dashboard"
+              element={
                 user?.role === "admin" ? (
                   <AdminPage />
                 ) : (
@@ -66,20 +70,25 @@ function App() {
               }
             />
 
-
             <Route path="/category/:category" element={<CategoryPage />} />
 
             <Route
               path="/cart"
               element={user ? <CartPage /> : <Navigate to="/login" />}
             />
-            
+
+            <Route
+              path="/orders"
+              element={user ? <OrderPage /> : <Navigate to="/login" />}
+            />
+
             <Route
               path="/purchase-success"
               element={
                 user ? <PurchaseSuccessPage /> : <Navigate to="/login" />
               }
             />
+
             <Route
               path="/purchase-cancel"
               element={user ? <PurchaseCancelPage /> : <Navigate to="/login" />}
