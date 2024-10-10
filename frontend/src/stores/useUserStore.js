@@ -4,9 +4,12 @@ import { toast } from "react-hot-toast";
 
 export const useUserStore = create((set, get) => ({
     user: null,
+	isAuthenticated: false,
+	error: null,
     loading: false,
     checkingAuth: true,
-
+	message: null,
+	
     signup: async ({ name, email, password, confirmPassword }) => {
 		set({ loading: true });
 
@@ -17,7 +20,8 @@ export const useUserStore = create((set, get) => ({
 
 		try {
 			const res = await axiosInstance.post("/auth/signup", { name, email, password });
-			set({ user: res.data, loading: false });
+			set({ user: res.data.user, loading: false, isAuthenticated: true });
+			return res.data;
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
@@ -29,8 +33,7 @@ export const useUserStore = create((set, get) => ({
 
 		try {
 			const res = await axiosInstance.post("/auth/login", { email, password });
-
-			set({ user: res.data, loading: false });
+			set({ user: res.data, loading: false, isAuthenticated: true});
 		} catch (error) {
 			set({ loading: false });
 			toast.error(error.response.data.message || "An error occurred");
@@ -40,17 +43,59 @@ export const useUserStore = create((set, get) => ({
 	logout: async () => {
 		try {
 			await axiosInstance.post("/auth/logout");
-			set({ user: null });
+			set({ user: null, isAuthenticated: false });
 		} catch (error) {
 			toast.error(error.response?.data?.message || "An error occurred during logout");
 		}
 	},
 
+	verifyEmail: async (code) => {
+		set({ loading: true, error: null });
+		try {
+			const response = await axiosInstance.post(`/auth/verify-email`, { code });
+			set({ user: response.data.user, isAuthenticated: true, loading: false });
+			
+			// TODO
+			return response.data;
+		} catch (error) {
+			set({ error: error.response.data.message || "Error verifying email", loading: false });
+			throw error;
+		}
+	},
+
+	forgotPassword: async (email) => {
+		set({ loading: true, error: null });
+		try {
+			const response = await axiosInstance.post(`/auth/forgot-password`, { email });
+			set({ message: response.data.message, loading: false });
+		} catch (error) {
+			set({
+				loading: false,
+				error: error.response.data.message || "Error sending reset password email",
+			});
+			throw error;
+		}
+	},
+
+	resetPassword: async (token, password) => {
+		set({ isLoading: true, error: null });
+		try {
+			const response = await axiosInstance.post(`/auth/reset-password/${token}`, { password });
+			set({ message: response.data.message, loading: false });
+		} catch (error) {
+			set({
+				loading: false,
+				error: error.response.data.message || "Error resetting password",
+			});
+			throw error;
+		}
+	},
+
 	checkAuth: async () => {
-		set({ checkingAuth: true });
+		set({ checkingAuth: true, error: null });
 		try {
 			const response = await axiosInstance.get("/auth/profile");
-			set({ user: response.data, checkingAuth: false });
+			set({ user: response.data, checkingAuth: false, isAuthenticated: true });
 		} catch (error) {
 			console.log(error.message);
 			set({ checkingAuth: false, user: null });

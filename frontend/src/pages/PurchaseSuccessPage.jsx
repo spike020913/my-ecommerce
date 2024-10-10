@@ -21,6 +21,7 @@ const PurchaseSuccessPage = () => {
         console.log(error);
       } finally {
         setIsProcessing(false);
+        clearCart();
       }
     };
 

@@ -18,6 +18,14 @@ const userSchema = mongoose.Schema({
         required: [true, 'Please enter your password'],
         minlength: [6, 'Your password must be at least 6 characters'],
     },
+    lastLogin: {
+        type: Date,
+        default: Date.now,
+    },
+    isVerified: {
+			type: Boolean,
+			default: false,
+		},
     cartItems: [
         {
             product: {
@@ -35,6 +43,11 @@ const userSchema = mongoose.Schema({
         enum: ['customer', 'admin'],
         default: 'customer',
     },
+
+    resetPasswordToken: String,
+    resetPasswordExpireAt: Date,
+    verificationToken: String,
+    verificationTokenExpireAt: Date,
 }, 
     // createdAt, updatedAt
 {

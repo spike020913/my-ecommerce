@@ -16,9 +16,11 @@ import CartPage from "./pages/CartPage.jsx";
 import OrderPage from "./pages/OrderPage.jsx";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage.jsx";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage.jsx";
-
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import EmailVeification from "./pages/EmailVerification.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 function App() {
-  const { user, checkAuth, checkingAuth } = useUserStore();
+  const { user, isVerified, checkAuth, checkingAuth } = useUserStore();
   const { getCartItems } = useCartStore();
 
   useEffect(() => {
@@ -57,6 +59,23 @@ function App() {
             <Route
               path="/login"
               element={user ? <Navigate to="/" /> : <LoginPage />}
+            />
+
+            <Route
+              path="/forgot-password"
+              element={user ? <Navigate to="/" /> : <ForgotPassword />}
+            />
+
+            <Route
+              path="/verify-email"
+              element={
+                user && !isVerified ? <EmailVeification /> : <Navigate to="/" />
+              }
+            />
+
+            <Route
+              path="/reset-password/:token"
+              element={user ? <Navigate to="/" /> : <ResetPassword />}
             />
 
             <Route
