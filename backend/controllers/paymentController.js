@@ -92,7 +92,7 @@ export const checkoutSuccess = async (req, res) => {
 				});
 			}
 
-			if (session.metadata.couponCode) {
+			if (session?.metadata.couponCode) {
                 // deactivate the coupon after use
 				await Coupon.findOneAndUpdate(
 					{
